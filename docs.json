@@ -12,6 +12,18 @@
     "dark": "#4F46E5"
   },
   "theme": "mint",
+  "navbar": {
+    "links": [
+      {
+        "label": "Website",
+        "href": "https://useraven.ai"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/Laxcorp-Research/project-raven"
+      }
+    ]
+  },
   "navigation": {
     "groups": [
       {
