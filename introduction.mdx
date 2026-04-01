@@ -1,0 +1,122 @@
+---
+title: Introduction
+description: AI meeting copilot with real-time transcription, echo cancellation, and a stealth overlay invisible to screen sharing.
+---
+
+<img
+  className="block dark:hidden"
+  src="/images/architecture.png"
+  alt="Raven Architecture"
+/>
+
+Raven is an AI-powered meeting copilot that runs on your desktop. It captures both sides of any conversation, cancels echo so voices don't bleed between streams, transcribes everything in real-time, and gives you AI assistance with full context - all while staying completely invisible to screen sharing.
+
+## Get Raven
+
+<CardGroup cols={2}>
+  <Card title="Download Raven" icon="download" href="https://useraven.ai">
+    Download the app for macOS or Windows. Sign in and start using Raven immediately - no setup required.
+  </Card>
+  <Card title="Build from Source" icon="code" href="/quickstart/overview">
+    Clone the open-source repo, bring your own API keys, and build Raven yourself.
+  </Card>
+</CardGroup>
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Dual-Stream Audio" icon="waveform-lines">
+    Captures system audio and microphone simultaneously on macOS and Windows using native platform APIs.
+  </Card>
+  <Card title="Echo Cancellation" icon="wave-pulse">
+    Built-in echo cancellation prevents the remote speaker's voice from leaking into your microphone stream.
+  </Card>
+  <Card title="Real-Time Transcription" icon="closed-captioning">
+    Live speech-to-text with separate speaker labels for "You" and "Them". Supports 20+ languages.
+  </Card>
+  <Card title="AI Assistance" icon="brain">
+    Get context-aware help from Claude or GPT during meetings - quick actions, follow-ups, recaps, and more.
+  </Card>
+  <Card title="Screenshot Context" icon="camera">
+    Press `Cmd+Enter` to capture your screen and send it to the AI. Solve problems, interpret slides, or analyze anything visible.
+  </Card>
+  <Card title="Stealth Overlay" icon="eye-slash">
+    Completely invisible to Zoom, Meet, Teams, and Discord screen sharing. Drag, resize, and interact while staying hidden.
+  </Card>
+  <Card title="Local-First" icon="lock">
+    Your data stays on your machine. Optional incognito mode for sessions you don't want saved.
+  </Card>
+  <Card title="Modes" icon="sliders">
+    Customizable AI behavior profiles - Interview, Sales, Meeting Notes, Learning - with document upload for extra context.
+  </Card>
+  <Card title="Session History" icon="magnifying-glass">
+    Every session is saved with AI-generated titles and summaries. Search across all past meetings by keyword.
+  </Card>
+  <Card title="20+ Languages" icon="language">
+    Transcription in English, Hindi, Spanish, French, German, Japanese, Korean, Chinese, Arabic, and more. Output language configurable independently.
+  </Card>
+  <Card title="Meeting Detection (Pro)" icon="video">
+    Auto-detects Zoom, Teams, and Meet meetings on Apple Silicon Macs. Post-meeting insights including summaries, action items, and sentiment analysis.
+  </Card>
+  <Card title="Cloud Sync (Pro)" icon="cloud">
+    Sessions, modes, and documents sync across devices. Sign in with Google or email.
+  </Card>
+</CardGroup>
+
+## How It Works
+
+<Steps>
+  <Step title="Start recording">
+    Click the record button on the overlay or press `Cmd+R`.
+  </Step>
+  <Step title="Audio capture">
+    Raven captures both system audio (what you hear) and your microphone simultaneously using native platform APIs.
+  </Step>
+  <Step title="Echo cancellation">
+    Both streams pass through an echo cancellation pipeline so the remote speaker's voice doesn't contaminate your mic signal.
+  </Step>
+  <Step title="Transcription">
+    Clean audio is transcribed in real-time. Your speech appears as "You" and the remote speaker as "Them".
+  </Step>
+  <Step title="AI assistance">
+    Ask the AI for help at any time - it has full context from the conversation. Press `Cmd+Enter` to include a screenshot of your screen for visual context.
+  </Step>
+</Steps>
+
+## Platform Support
+
+| Platform | Status |
+|----------|--------|
+| **macOS 12+** (Intel & Apple Silicon) | Fully supported |
+| **Windows 10/11** | Supported |
+| Linux | Not yet supported |
+
+## Keyboard Shortcuts
+
+| Action | Shortcut |
+|--------|----------|
+| Toggle Overlay | `Cmd + \` |
+| Start/Stop Recording | `Cmd + R` |
+| AI Assist (with screenshot) | `Cmd + Enter` |
+| Clear Conversation | `Cmd + Shift + R` |
+| Move Overlay | `Cmd + Arrow Keys` |
+| Scroll Overlay | `Cmd + Shift + Up/Down` |
+
+<Note>On Windows, replace `Cmd` with `Ctrl`.</Note>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Using Raven" icon="play" href="/features/recording">
+    Learn how recording, transcription, and AI assistance work.
+  </Card>
+  <Card title="Raven Pro vs Open Source" icon="crown" href="/pro/free-vs-pro">
+    Compare the Pro app with the open-source version.
+  </Card>
+  <Card title="Build from Source" icon="terminal" href="/quickstart/overview">
+    Set up the open-source version on macOS or Windows.
+  </Card>
+  <Card title="Contributing" icon="code" href="/contributing/repo-structure">
+    Understand the repo structure and how to contribute.
+  </Card>
+</CardGroup>

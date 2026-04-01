@@ -1,0 +1,71 @@
+---
+title: AI Assistance
+description: Get real-time help from Claude or GPT during meetings with quick actions, typed questions, and screenshot context.
+---
+
+Raven gives you an AI assistant that understands what's happening in your meeting. It sees the full conversation transcript and can answer questions, suggest responses, summarize progress, and more.
+
+## AI Providers
+
+Raven supports two AI providers:
+
+| Provider | Models |
+|----------|--------|
+| **Anthropic** | Claude (default) |
+| **OpenAI** | GPT |
+
+In the **Raven Pro** app, AI keys are managed for you - no setup needed. In the **open-source version**, you provide your own Anthropic or OpenAI API key during onboarding.
+
+## Quick Actions
+
+During a recording, the overlay shows quick action buttons. Click any of them and the AI responds with full conversation context:
+
+| Action | What it does |
+|--------|-------------|
+| **Assist** | General help based on the current conversation |
+| **What should I say?** | Suggests a response to the last thing the other person said |
+| **Follow-up** | Proposes a relevant follow-up question |
+| **Recap** | Summarizes the conversation so far |
+
+On any AI response card, you can click **Tell me more** to expand on that answer.
+
+You can also trigger Assist with `Cmd+Enter` (includes a screenshot of your screen for visual context).
+
+## Typed Questions
+
+Type a specific question in the input bar at the bottom of the overlay and press Enter. The AI answers your question directly, using the conversation transcript as context.
+
+This is useful for pointed questions like "What was their budget?" or "Summarize the technical requirements they mentioned."
+
+## Screenshot Context
+
+Press `Cmd+Enter` to capture a screenshot of your screen and send it to the AI along with your question.
+
+**During a recording:** The AI sees both the screenshot AND the conversation transcript. Useful for referencing slides, documents, or shared screens during a meeting.
+
+**Without a recording:** The AI operates purely on the visual content. This turns Raven into a general screen assistant - solve math problems, interpret charts, answer questions about anything visible on screen.
+
+The screenshot automatically excludes Raven's own overlay, so the AI only sees what's beneath it.
+
+## Math & Code Rendering
+
+AI responses render with full formatting:
+
+- **Markdown** - bold, italic, bullet points, headers
+- **Math formulas** - rendered with KaTeX (e.g., equations from a whiteboard or slide)
+- **Code blocks** - syntax-highlighted with language detection
+
+## Fast vs Deep (Pro)
+
+Raven Pro users see a **Fast/Deep toggle** on the overlay pill:
+
+| Mode | Behavior |
+|------|----------|
+| **Fast** | Uses a smaller, faster model for quick responses |
+| **Deep** | Uses a larger, more capable model for complex questions |
+
+Switch between them depending on whether you need a quick answer or a thorough one.
+
+## Copying Responses
+
+Hover over any AI response card and click the **copy icon** to copy the response to your clipboard. You can paste it into notes, chat, or any other application.

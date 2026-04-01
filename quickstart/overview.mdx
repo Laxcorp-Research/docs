@@ -1,0 +1,69 @@
+---
+title: Build from Source
+description: Set up the open-source version of Raven on your machine.
+---
+
+<Note>
+This guide is for the **open-source version** of Raven. If you just want to use Raven, [download the app](https://useraven.ai) instead - no build steps required.
+</Note>
+
+The open-source version lets you build Raven from source and provide your own API keys. Pick your platform and follow each step in order.
+
+## Prerequisites
+
+<AccordionGroup>
+  <Accordion title="API Keys (entered in-app on first launch)">
+    - [Deepgram](https://console.deepgram.com) - real-time transcription (free tier available)
+    - [Anthropic](https://console.anthropic.com) or [OpenAI](https://platform.openai.com) - AI assistance
+  </Accordion>
+  <Accordion title="System Requirements">
+    - **Node.js** 22.12.0 or higher
+    - **GStreamer** for echo cancellation
+    - Platform-specific build tools (Xcode CLI on macOS, Visual Studio Build Tools on Windows)
+  </Accordion>
+</AccordionGroup>
+
+## Choose Your Platform
+
+<CardGroup cols={2}>
+  <Card title="macOS Setup" icon="apple" href="/quickstart/macos">
+    macOS 12 (Monterey) through macOS 15 (Sequoia), Intel and Apple Silicon.
+  </Card>
+  <Card title="Windows Setup" icon="windows" href="/quickstart/windows">
+    Windows 10 (21H2+) and Windows 11. All commands for PowerShell.
+  </Card>
+</CardGroup>
+
+## Testing
+
+After setup, verify everything works:
+
+```bash
+npm test              # Unit + integration tests
+npm run test:coverage # With coverage report
+npm run test:e2e      # End-to-end (requires npm run build first)
+npm run test:all      # Everything
+```
+
+## Troubleshooting
+
+| Symptom | Likely Cause | Fix |
+|---------|-------------|-----|
+| `NODE_MODULE_VERSION mismatch` at runtime | Native module built for wrong Electron version | `npx @electron/rebuild -f -w better-sqlite3` |
+| App starts, no audio on macOS | Missing system permissions | System Settings > Privacy & Security: grant Microphone and Screen Recording |
+| App starts, no audio on Windows | Wrong default audio device | Settings > Sound: set correct default playback/recording devices |
+
+**Reset all data (fresh start):**
+
+<Tabs>
+  <Tab title="macOS">
+    ```bash
+    rm -rf ~/Library/Application\ Support/project-raven/
+    ```
+  </Tab>
+  <Tab title="Windows">
+    ```powershell
+    rmdir /s /q "%APPDATA%\project-raven"
+    ```
+  </Tab>
+</Tabs>

@@ -1,0 +1,85 @@
+---
+title: Raven Pro vs Open Source
+description: Compare the Raven Pro app with the open-source version you can build yourself.
+---
+
+Raven comes in two flavors:
+
+- **Raven Pro** - [Download the app](https://useraven.ai), sign in, and start using it immediately. Everything is managed for you.
+- **Raven Open Source** - [Clone the repo](https://github.com/Laxcorp-Research/project-raven), build from source, and bring your own API keys.
+
+Both versions share the same core - the same stealth overlay, echo cancellation, transcription, AI, modes, and sessions. Pro adds managed infrastructure, cloud sync, and additional features on top.
+
+## Feature Comparison
+
+| Feature | Raven Pro | Open Source |
+|---------|-----------|-------------|
+| **Setup** | Download, install, sign in | Clone repo, install dependencies, build from source |
+| **API keys** | Managed - nothing to configure | You provide your own (Deepgram + Anthropic/OpenAI) |
+| **Transcription** | Deepgram + AssemblyAI with auto-fallback | Deepgram (your key) |
+| **AI** | Claude and GPT - managed | Claude or GPT (your key) |
+| **Meeting detection** | Auto-detects Zoom, Teams, Meet (Apple Silicon) | -- |
+| **Post-meeting insights** | Summaries, action items, topics, sentiment | -- |
+| **Fast/Deep model toggle** | Yes | -- |
+| **Cloud sync** | Sessions, modes, documents across devices | -- |
+| **Sign in** | Google or email | -- |
+| **Stealth overlay** | Yes | Yes |
+| **Echo cancellation** | Yes | Yes |
+| **Modes & quick actions** | Yes + cloud sync | Yes (local) |
+| **Document upload** | Yes + cloud sync | Yes (local) |
+| **Incognito mode** | Yes | Yes |
+| **Session history & search** | Yes + cloud sync | Yes (local) |
+| **20+ languages** | Yes | Yes |
+| **Auto-updates** | Yes | -- |
+
+## Raven Pro Plans
+
+Raven Pro has two tiers:
+
+| | Free | Pro |
+|--|------|-----|
+| **Price** | $0 | $29.99/mo or $24.99/mo (yearly) |
+| **AI requests/day** | 5 | Unlimited |
+| **Session duration** | 2 minutes | Unlimited |
+| **Post-meeting insights** | -- | Yes |
+| **Cloud sync** | Yes | Yes |
+| **Meeting detection** | Yes | Yes |
+
+All limits on the Free tier reset at midnight UTC each day. See [Plans & Billing](/pro/billing) for details on upgrading.
+
+## Open Source - Bring Your Own Keys
+
+The open-source version requires you to provide API keys during the in-app onboarding:
+
+1. **Deepgram** - for real-time transcription (free tier available at [console.deepgram.com](https://console.deepgram.com))
+2. **Anthropic** or **OpenAI** - for AI assistance
+
+All requests go directly from your machine to these services. Your keys are stored locally and never sent anywhere else. There are no usage limits beyond what your API provider imposes.
+
+To get started with the open-source version, see [Build from Source](/quickstart/overview).
+
+## Language Support
+
+Both versions support transcription in 20+ languages:
+
+| | | |
+|--|--|--|
+| English | Japanese | Bengali |
+| Hindi | Korean | Dutch |
+| Spanish | Chinese | Polish |
+| French | Arabic | Russian |
+| German | Tamil | Thai |
+| Italian | Turkish | Ukrainian |
+| Portuguese | Vietnamese | |
+
+**Multilingual** mode auto-detects the spoken language.
+
+The **output language** (what language the AI responds in) can be set independently: English, Auto (matches transcript), Hindi, Spanish, French, German, Italian, Portuguese, Japanese, Korean, or Chinese.
+
+Both settings are in **Settings > Language**.
+
+## Privacy
+
+- **Raven Pro** - your data syncs to the cloud for cross-device access. Analytics are opt-in and disabled by default.
+- **Open Source** - nothing leaves your machine except direct API calls to Deepgram and your AI provider. No analytics, no telemetry.
+- **Both versions** - crash reporting (with automatic PII stripping) helps diagnose issues. Incognito mode is available in both.

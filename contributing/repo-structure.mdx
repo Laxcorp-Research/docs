@@ -1,0 +1,53 @@
+---
+title: Contributing
+description: How to contribute to the Raven open-source project.
+---
+
+Raven is open-source and we welcome contributions. Here's how to get involved.
+
+## Getting the Code
+
+```bash
+git clone https://github.com/Laxcorp-Research/project-raven.git
+cd project-raven
+```
+
+For the full build-from-source guide including native dependencies, see:
+- [macOS Setup](/quickstart/macos)
+- [Windows Setup](/quickstart/windows)
+
+## Making Changes
+
+1. Fork the repo on GitHub
+2. Create a branch for your change
+3. Make your changes and test them
+4. Submit a pull request
+
+### Commit guidelines
+
+- One feature or fix per commit
+- Use clear commit messages: `feat: add X`, `fix: resolve Y`
+- Run `npm test` and `tsc --noEmit` before pushing
+
+### What not to commit
+
+- `.env` files, API keys, or any credentials
+- Generated files (build artifacts, `node_modules`)
+
+## CI Checks
+
+Every pull request automatically runs:
+
+- **TypeScript type checking** - `tsc --noEmit`
+- **Unit and integration tests** - Vitest
+
+Both must pass before a PR can be merged.
+
+## Where to Start
+
+- **Issues** - check the [GitHub Issues](https://github.com/Laxcorp-Research/project-raven/issues) for bugs and feature requests
+- **Discussions** - ask questions or propose ideas in [GitHub Discussions](https://github.com/Laxcorp-Research/project-raven/discussions)
+
+## License
+
+Raven is released under the [MIT License](https://github.com/Laxcorp-Research/project-raven/blob/main/LICENSE).

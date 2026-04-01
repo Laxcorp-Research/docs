@@ -1,0 +1,84 @@
+---
+title: Recording & Transcription
+description: How Raven captures audio, cancels echo, and transcribes both sides of your conversations in real-time.
+---
+
+## Starting a Recording
+
+Press `Cmd+R` (or `Ctrl+R` on Windows) or click the **record button** on the overlay pill. Raven immediately begins capturing both your microphone and system audio.
+
+While recording, the overlay pill shows a pulsing indicator, and the system tray icon changes to reflect the active state.
+
+## What Gets Captured
+
+Raven runs **two audio streams** simultaneously:
+
+| Stream | What it captures | Label in transcript |
+|--------|-----------------|---------------------|
+| **Microphone** | Your voice | "You" |
+| **System audio** | Everything playing through your speakers - Zoom, Meet, Teams, YouTube, etc. | "Them" |
+
+Both streams are captured using native platform APIs - ScreenCaptureKit on macOS and WASAPI on Windows - for reliable, low-latency capture.
+
+## Echo Cancellation
+
+Without echo cancellation, the remote speaker's voice would leak from your speakers into your microphone and appear as duplicate text. Raven runs both streams through an echo cancellation pipeline that removes this bleed, producing clean separated audio.
+
+Echo cancellation activates automatically when you start recording. If conditions are poor (high latency or system load), it temporarily bypasses to avoid distortion - raw mic audio passes through without processing until conditions stabilize.
+
+## Live Transcription
+
+Clean audio is transcribed in real-time. Transcripts appear in the overlay as they happen:
+
+- **Interim results** appear in italic while someone is still speaking
+- **Final results** replace interims once the speaker pauses
+- **Same-speaker merging** combines consecutive utterances within a few seconds to avoid fragmentation
+- **Speaker labels** stay consistent - your voice is always "You", theirs is always "Them"
+
+### Supported Languages
+
+Raven supports transcription in 20+ languages:
+
+English, Hindi, Spanish, French, German, Italian, Portuguese, Japanese, Korean, Chinese, Arabic, Bengali, Dutch, Polish, Russian, Tamil, Thai, Turkish, Ukrainian, Vietnamese
+
+There's also a **Multilingual** mode that auto-detects the language being spoken.
+
+You can set the transcription language and output language independently in **Settings > Language**.
+
+## Enhanced Transcription (Pro)
+
+Raven Pro uses an enhanced transcription pipeline with multiple providers and automatic fallback:
+
+1. **Meeting detection** (Apple Silicon Macs) - auto-detects Zoom, Teams, and Meet meetings and captures audio directly from the meeting application
+2. **AssemblyAI** - high-accuracy transcription with turn detection
+3. **Deepgram** - reliable fallback if the above aren't available
+
+Switching between providers is seamless - transcription continues without interruption. In the open-source version, transcription uses Deepgram with your own API key.
+
+## Stopping a Recording
+
+Press `Cmd+R` again or click the stop button. Raven:
+
+1. Stops capturing audio
+2. Saves the full transcript and any AI responses
+3. Generates an AI summary and title for the session
+4. In Raven Pro, syncs the session to the cloud
+
+The session appears in your **dashboard history** immediately.
+
+## Permissions
+
+### macOS
+
+Raven needs two permissions to capture audio:
+
+| Permission | Why |
+|------------|-----|
+| **Microphone** | Capture your voice |
+| **Screen Recording** | Capture system audio |
+
+macOS prompts for these automatically on first recording. If you denied them, go to **System Settings > Privacy & Security** to grant access.
+
+### Windows
+
+No special permissions are required - Raven uses standard Windows audio APIs.

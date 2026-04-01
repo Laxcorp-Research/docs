@@ -1,0 +1,87 @@
+---
+title: Modes
+description: Customizable AI behavior profiles with templates, quick actions, and document upload.
+---
+
+Modes let you customize how Raven's AI behaves during different types of meetings. Each mode has its own system prompt that shapes the AI's personality, focus, and response style.
+
+## Built-in Modes
+
+Raven comes with a **General Assistant** mode (active by default) and several templates you can create modes from:
+
+| Template | Best for |
+|----------|----------|
+| **Interview** | Job interviews - uses STAR method, professional tone |
+| **Sales Call** | Sales conversations - objection handling, closing techniques |
+| **Meeting Notes** | General meetings - structured notes, action items, decisions |
+| **Learning** | Lectures and study sessions - key concepts, summaries |
+
+## Creating a Custom Mode
+
+Open the **dashboard > Modes** and click to create a new mode. You can:
+
+1. **Start from a template** or create from scratch
+2. **Write a system prompt** that tells the AI how to behave
+3. **Add quick actions** - custom buttons that appear in the overlay (e.g., "List action items", "Summarize decisions")
+4. **Define a notes template** - structured sections the AI uses when generating session summaries (e.g., "Key Decisions", "Follow-ups", "Action Items")
+5. **Upload reference documents** - PDFs, Word docs, text files, or Markdown that the AI can reference during meetings
+
+## Quick Actions
+
+Quick actions are custom buttons that appear in the overlay during a recording. Each one sends a pre-written prompt to the AI with full conversation context.
+
+For example, an Interview mode might have:
+- "Suggest a STAR answer"
+- "What follow-up should I ask?"
+- "Summarize their key requirements"
+
+You can add, edit, and reorder quick actions in the mode editor.
+
+## Document Upload
+
+Each mode can have reference documents uploaded to it. When the AI generates a response, it searches these documents for relevant content and includes it as context.
+
+### How it works
+
+1. Upload a document in the mode editor (PDF, DOCX, TXT, or MD - up to 10 MB)
+2. The document is processed and indexed locally on your machine
+3. During a meeting, when you ask the AI a question, it automatically finds the most relevant sections from your documents
+4. Those sections are included in the AI's context alongside the conversation transcript
+
+### What to upload
+
+- **Interview prep**: job descriptions, company research, your resume
+- **Sales calls**: product specs, pricing sheets, competitor analysis
+- **Team meetings**: project briefs, sprint plans, previous meeting notes
+- **Learning**: textbook chapters, lecture notes, reference material
+
+### Supported formats
+
+| Format | Extension |
+|--------|-----------|
+| PDF | `.pdf` |
+| Word | `.docx` |
+| Plain text | `.txt` |
+| Markdown | `.md` |
+
+Maximum file size: **10 MB** per document. Documents are processed entirely on your machine - nothing is uploaded to external servers (except in Pro, where they sync to the cloud for cross-device access).
+
+### Limitations
+
+- Documents are scoped to the mode they're uploaded in - switching modes changes which documents are available
+- Re-uploading a file replaces the previous version (delete and re-upload)
+- Only local files are supported - no URL ingestion
+
+## Switching Modes
+
+Click the mode name in the dashboard or use the mode selector. The active mode is applied to all new recording sessions. Each session records which mode was used.
+
+## Resetting a Mode
+
+Built-in mode templates can be reset to their original prompt and quick actions at any time from the mode editor. Custom modes can be edited or deleted freely.
+
+## Cloud Sync (Pro)
+
+In Raven Pro, your custom modes and their uploaded documents sync across devices. Create a mode on one machine and it's available everywhere you're signed in.
+
+In the open-source version, modes are stored locally on your machine.

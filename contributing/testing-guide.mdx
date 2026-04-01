@@ -1,0 +1,105 @@
+---
+title: Testing Guide
+description: How to test Raven - automated tests and manual QA checklist.
+---
+
+## Automated Tests
+
+```bash
+npm test              # Unit + integration tests (Vitest)
+npm run test:coverage # With coverage report
+npm run test:e2e      # End-to-end tests (requires `npm run build` first)
+npm run test:all      # Everything
+```
+
+## Manual Testing Checklist
+
+Before a release or after significant changes, run through these scenarios.
+
+### First Launch & Onboarding
+
+1. Delete app data: `rm -rf ~/Library/Application\ Support/project-raven/` (macOS) or `%APPDATA%\project-raven` (Windows)
+2. Run `npm run dev`
+3. Verify: onboarding appears, you can enter API keys, overlay appears after completing setup, tray icon shows in the menu bar
+
+### Recording & Transcription
+
+1. Join a call or play a video with speech
+2. Press `Cmd+R` to start recording
+3. Talk for 2+ minutes, let the other side talk too
+
+**Verify:**
+- Your speech shows as "You" (right side), theirs as "Them" (left side)
+- Interim text appears while speaking, replaced by final text on pause
+- No echo - your voice doesn't appear on the "Them" side
+- Tray icon shows recording state
+
+### AI Assistance
+
+1. While recording, click **Assist** or press `Cmd+Enter`
+2. Try "What should I say?", "Follow-up", "Recap"
+3. Type a specific question in the input bar
+4. Stop recording, then press `Cmd+Enter` on a webpage
+
+**Verify:**
+- Responses reference the actual conversation
+- "What should I say?" references the last thing the other person said
+- Typed questions get direct answers
+- Screenshot mode (no session) describes and solves what's on screen
+
+### Overlay & Stealth
+
+1. Position the overlay over a meeting window
+2. Share your screen - ask someone if they can see the overlay
+3. Drag the overlay by the pill, resize from edges
+4. Click through transparent areas to the app behind
+
+**Verify:**
+- Overlay is invisible to screen sharing
+- Drag and resize work smoothly
+- Clicks pass through transparent areas
+
+### Keyboard Shortcuts
+
+| Shortcut | Expected |
+|----------|----------|
+| `Cmd + \` | Toggle overlay visibility |
+| `Cmd + R` | Start/stop recording |
+| `Cmd + Enter` | AI assist with screenshot |
+| `Cmd + Shift + R` | Clear conversation |
+
+### Session Persistence
+
+1. Record a 2+ minute conversation, get an AI response
+2. Stop recording and quit the app (`Cmd+Q`)
+3. Reopen the app
+
+**Verify:**
+- Session appears in the dashboard
+- Title was auto-generated
+- Full transcript and AI responses are preserved
+
+### Graceful Shutdown
+
+1. Start recording, then quit (`Cmd+Q`) while still recording
+
+**Verify:**
+- App quits within a few seconds (no hang)
+- No orphan processes in Activity Monitor
+- The interrupted session is saved and visible on reopen
+
+### Modes
+
+1. Switch to "Interview" mode in the dashboard
+2. Start recording and ask for AI help
+
+**Verify:**
+- AI responses reflect the mode's personality
+- Can create and edit custom modes
+- Can upload documents and see them listed
+
+### Edge Cases
+
+- **No internet during recording**: disconnect WiFi, reconnect after 10 seconds - transcript should pause and resume
+- **Rapid start/stop**: start and stop recording within 2 seconds - no crashes
+- **Very long utterance**: speak for 60+ seconds without pausing - text keeps updating

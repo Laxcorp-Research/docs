@@ -1,0 +1,91 @@
+---
+title: Overlay & Stealth
+description: A floating overlay that stays on top of your meetings - completely invisible to screen sharing.
+---
+
+The Raven overlay is a transparent floating panel that sits on top of your screen. It shows your transcript, AI responses, and controls - all while being completely invisible to anyone viewing your shared screen.
+
+## Stealth Mode
+
+When stealth is enabled (it's on by default), the overlay is **invisible to screen sharing applications**:
+
+- Zoom, Google Meet, Microsoft Teams, Discord - none of them can see it
+- QuickTime screen recordings won't capture it
+- Most screenshot tools won't capture it
+
+**You** can still see and interact with the overlay normally. Only screen capture tools are excluded.
+
+### How to toggle
+
+| Location | How |
+|----------|-----|
+| Overlay pill | Click the **eye icon** |
+| Dashboard header | Click the **eye icon** |
+| Settings | Toggle in General settings |
+
+When stealth is **on**, the pill shows a teal eye-off icon and the toolbar shows "Hidden". When **off**, it shows a regular eye icon and "Visible".
+
+<Note>
+Stealth mode hides the overlay from screen capture. This is different from hiding the overlay entirely - use `Cmd+\` to toggle overlay visibility on your own screen.
+</Note>
+
+### Platform notes
+
+- **macOS**: Full support. Also hides the dock icon and tray icon when stealth is active for maximum discretion.
+- **Windows**: Full support.
+- **Linux**: Not supported - stealth mode has no effect.
+- **OBS Studio**: Display capture respects stealth. Some specialized capture modes (game capture, specific window capture) may still see the overlay.
+
+## The Overlay Layout
+
+### Controller Pill
+
+The compact pill is your control center. It's always visible and provides quick access to everything:
+
+| Button | What it does |
+|--------|-------------|
+| **Raven logo** | Toggle between expanded and compact overlay view |
+| **Record** | Start or stop a recording session |
+| **Stealth** | Toggle screen-share invisibility |
+| **Fast/Deep** | Switch AI model tier (Pro only) |
+| **Incognito** | Toggle session persistence - incognito sessions aren't saved |
+| **Hide** | Hide the overlay from your screen (`Cmd+\` to bring it back) |
+
+### Tabs
+
+The expanded overlay has three tabs:
+
+| Tab | Content |
+|-----|---------|
+| **Responses** | AI response cards with streaming output and action badges |
+| **Transcript** | Live transcript with "You" and "Them" speaker labels |
+| **Chat** | Persistent chat thread with the AI |
+
+## Moving & Resizing
+
+- **Drag**: Click and drag the pill to move the overlay anywhere on screen
+- **Resize**: Drag the left, right, or bottom edges to resize
+- **Reset**: Double-click any resize edge to reset to default size and re-center on screen
+
+The overlay stays within screen bounds and won't go off-screen.
+
+## Click-Through
+
+Transparent areas of the overlay are **click-through** - clicks pass through to whatever application is beneath. You can position the overlay directly over your meeting window and still click on meeting controls through the transparent areas.
+
+Only interactive elements (pill, buttons, response cards, resize handles) capture clicks.
+
+## System Tray
+
+Raven lives in your system tray (menu bar on macOS, taskbar on Windows) with quick access to:
+
+- **Start/Stop Recording** - mirrors the `Cmd+R` shortcut
+- **View Sessions** - opens the dashboard
+- **Settings** - opens the settings panel
+- **Quit Raven** - graceful shutdown
+
+The tray icon changes when a recording is active.
+
+## Auto-Updater (Pro)
+
+Raven Pro checks for updates automatically after launch. When an update is available, you'll be notified and can choose when to download and install it. Updates are never forced - you stay in control.

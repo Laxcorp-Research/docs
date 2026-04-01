@@ -1,0 +1,194 @@
+---
+title: Windows Setup
+description: Complete Windows setup guide from a fresh machine to a running app.
+---
+
+<Info>Tested on Windows 10 (21H2+) and Windows 11. All commands are for **PowerShell**. Open a **new terminal** after each installer to pick up PATH changes.</Info>
+
+<Steps>
+  <Step title="Install Visual Studio Build Tools">
+    Download and run the [Visual Studio Build Tools installer](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+
+    In the installer, check the **"Desktop development with C++"** workload. Make sure these optional components are selected:
+    - MSVC Build Tools for x64/x86 (Latest)
+    - Windows 10/11 SDK
+    - C++ CMake tools for Windows
+
+    Verify:
+    ```powershell
+    & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -products * -requires Microsoft.VisualStudio.Workload.VCTools -property displayName
+    # Expected: Visual Studio Build Tools 2022
+    ```
+  </Step>
+
+  <Step title="Install Node.js 22">
+    **Option A** - [nvm-windows](https://github.com/coreybutler/nvm-windows/releases) (recommended):
+
+    Download and run the latest `nvm-setup.exe`, then open a **new** terminal:
+
+    ```powershell
+    nvm install 22
+    nvm use 22
+    ```
+
+    **Option B** - Download the LTS 22.x MSI installer from [nodejs.org](https://nodejs.org/).
+
+    Verify (in a **new** terminal):
+    ```powershell
+    node -v
+    # Expected: v22.x.x
+    ```
+  </Step>
+
+  <Step title="Install Python">
+    Python is required by `node-gyp` to compile native Node.js modules.
+
+    ```powershell
+    winget install Python.Python.3.12 --source winget
+    ```
+
+    Or download from [python.org](https://www.python.org/downloads/) - make sure "Add to PATH" is checked.
+
+    Verify (in a **new** terminal):
+    ```powershell
+    python --version
+    # Expected: Python 3.x.x
+    ```
+  </Step>
+
+  <Step title="Install the Rust toolchain">
+    Download and run [rustup-init.exe](https://rustup.rs/). Accept the defaults (installs `stable-msvc`).
+
+    Verify (in a **new** terminal):
+    ```powershell
+    rustc --version
+    # Expected: rustc 1.xx.x (...)
+    rustup default stable-msvc
+    ```
+  </Step>
+
+  <Step title="Install GStreamer (MSVC)">
+    Download the **MSVC x86_64** installer from [gstreamer.freedesktop.org/download](https://gstreamer.freedesktop.org/download/) - click **Windows → MSVC x86_64 (VS 2022, Release CRT)**.
+
+    Run with default settings. After installation, verify (open a **new** terminal):
+    ```powershell
+    echo $env:GSTREAMER_1_0_ROOT_MSVC_X86_64
+    # Expected: C:\gstreamer\1.0\msvc_x86_64\ (or similar)
+    ```
+
+    <Accordion title="If the environment variable is not set">
+      The installer didn't set it. Find where GStreamer was installed and set it manually:
+
+      ```powershell
+      [Environment]::SetEnvironmentVariable("GSTREAMER_1_0_ROOT_MSVC_X86_64", "C:\Program Files\gstreamer\1.0\msvc_x86_64\", "User")
+      ```
+
+      Then **restart your terminal**.
+    </Accordion>
+  </Step>
+
+  <Step title="Install CMake">
+    ```powershell
+    winget install Kitware.CMake --source winget
+    ```
+
+    Or download from [cmake.org/download](https://cmake.org/download/) - make sure "Add to PATH" is checked.
+
+    Verify (in a **new** terminal):
+    ```powershell
+    cmake --version
+    # Expected: cmake version 3.x.x
+    ```
+  </Step>
+
+  <Step title="Clone the repo and install dependencies">
+    ```powershell
+    git clone https://github.com/Laxcorp-Research/project-raven.git
+    cd project-raven
+    npm install
+    ```
+
+    Verify:
+    ```powershell
+    Test-Path node_modules\.package-lock.json
+    # Expected: True
+    ```
+
+    <Accordion title="If npm install fails with Visual Studio errors">
+      ```powershell
+      # Fix 1: Set the version hint for node-gyp
+      npm config set msvs_version 2022
+      Remove-Item -Recurse -Force node_modules
+      npm install
+
+      # Fix 2: Environment variable (works on all npm versions)
+      $env:GYP_MSVS_VERSION = "2022"
+      Remove-Item -Recurse -Force node_modules
+      npm install
+      ```
+    </Accordion>
+  </Step>
+
+  <Step title="Build the GStreamer echo-cancellation addon">
+    First, check the Electron version:
+    ```powershell
+    node -e "console.log(require('./node_modules/electron/package.json').version)"
+    ```
+
+    Then build targeting that version:
+    ```powershell
+    cd src\native\aec
+    npm install
+    npx cmake-js compile --runtime electron --runtime-version <ELECTRON_VERSION>
+    cd ..\..\..
+    ```
+
+    Replace `<ELECTRON_VERSION>` with the version from the previous command.
+
+    <Warning>
+      The `--runtime electron --runtime-version` flags are **required**. Without them, the addon is built for Node.js instead of Electron and will **crash** when loaded.
+    </Warning>
+
+    Verify:
+    ```powershell
+    Test-Path src\native\aec\build\Release\raven-aec.node
+    # Expected: True
+    ```
+  </Step>
+
+  <Step title="Build the Windows audio capture module">
+    ```powershell
+    cd src\native\windows
+    npm install
+    npx napi build --platform --release
+    cd ..\..\..
+    ```
+
+    Verify:
+    ```powershell
+    Test-Path src\native\windows\raven-windows-audio.win32-x64-msvc.node
+    # Expected: True
+    ```
+  </Step>
+
+  <Step title="Run the app">
+    ```powershell
+    npm run dev
+    ```
+
+    The Electron app opens. On first launch you'll see a 6-step onboarding flow - enter your API keys.
+
+    <Warning>If audio capture doesn't work, check **Settings → Sound** and make sure the correct playback and recording devices are set as default.</Warning>
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| `Could not find any Python installation` | Install Python 3.x and add to PATH (Step 3) |
+| `Could not find any Visual Studio installation` | Set `$env:GYP_MSVS_VERSION = "2022"`, delete `node_modules`, re-run `npm install` |
+| cmake-js: "CMake is not installed" | Install CMake (Step 6) |
+| cmake-js: "GStreamer not found" | Set `GSTREAMER_1_0_ROOT_MSVC_X86_64` and restart terminal (Step 5) |
+| AEC addon crashes Electron on startup | Rebuild with `--runtime electron --runtime-version` (Step 8) |
+| `napi build` linker errors | `rustup default stable-msvc` and ensure VS Build Tools C++ workload is installed |

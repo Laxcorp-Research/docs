@@ -1,0 +1,170 @@
+---
+title: macOS Setup
+description: Complete macOS setup guide from a fresh machine to a running app.
+---
+
+<Info>Tested on macOS 12 (Monterey) through macOS 15 (Sequoia), Intel and Apple Silicon.</Info>
+
+<Steps>
+  <Step title="Install Xcode Command Line Tools">
+    ```bash
+    xcode-select --install
+    ```
+
+    A system dialog will appear - click **Install** and wait for it to finish (~2 min).
+
+    Verify:
+    ```bash
+    xcode-select -p
+    # Expected: /Library/Developer/CommandLineTools  (or an Xcode.app path)
+    ```
+
+    <Tip>If you see `xcode-select: error: command line tools are already installed` - you're good, move on.</Tip>
+  </Step>
+
+  <Step title="Install Node.js 22">
+    Install via [nvm](https://github.com/nvm-sh/nvm) (recommended):
+
+    ```bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+    ```
+
+    **Close and reopen your terminal**, then:
+
+    ```bash
+    nvm install 22
+    nvm use 22
+    ```
+
+    Verify:
+    ```bash
+    node -v
+    # Expected: v22.x.x (any 22+ version)
+    ```
+
+    <Warning>If `nvm: command not found`: Close your terminal and open a new one - nvm's install script adds itself to your shell profile, but only new shells pick it up.</Warning>
+  </Step>
+
+  <Step title="Install GStreamer">
+    ```bash
+    brew install gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad
+    ```
+
+    <Tip>Don't have Homebrew? Install it first from [brew.sh](https://brew.sh).</Tip>
+
+    Verify:
+    ```bash
+    pkg-config --modversion gstreamer-1.0
+    # Expected: 1.24.x (or similar)
+    ```
+
+    <Accordion title="If pkg-config can't find gstreamer">
+      Homebrew's `pkg-config` path isn't set. Add the correct line to your `~/.zshrc` and restart your terminal:
+
+      ```bash
+      # Apple Silicon (M1/M2/M3/M4):
+      echo 'export PKG_CONFIG_PATH="/opt/homebrew/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.zshrc
+
+      # Intel Mac:
+      echo 'export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"' >> ~/.zshrc
+      ```
+    </Accordion>
+  </Step>
+
+  <Step title="Clone the repo and install dependencies">
+    ```bash
+    git clone https://github.com/Laxcorp-Research/project-raven.git
+    cd project-raven
+    npm install
+    ```
+
+    `npm install` takes a few minutes. It automatically rebuilds `better-sqlite3` for Electron via the `postinstall` script.
+
+    Verify:
+    ```bash
+    ls node_modules/.package-lock.json && echo "OK"
+    # Expected: OK
+    ```
+
+    <Warning>If `npm install` fails with `node-gyp` errors, make sure Xcode Command Line Tools installed successfully in Step 1.</Warning>
+  </Step>
+
+  <Step title="Build the GStreamer echo-cancellation addon">
+    ```bash
+    cd src/native/aec
+    npm install
+    ./build-deps.sh
+    npx cmake-js compile
+    cd ../../..
+    ```
+
+    What this does:
+    1. Installs the addon's build tools (`cmake-js`, `node-addon-api`)
+    2. Verifies all GStreamer libraries and builds the WebRTC DSP plugin from source
+    3. Compiles the C++ echo-cancellation native module
+
+    Verify:
+    ```bash
+    ls src/native/aec/build/Release/raven-aec.node && echo "OK"
+    # Expected: OK
+    ```
+  </Step>
+
+  <Step title="Build the Swift audio capture binary">
+    ```bash
+    cd src/native/swift/AudioCapture
+    swift build -c release
+    cd ../../../..
+    ```
+
+    Verify:
+    ```bash
+    ls src/native/swift/AudioCapture/.build/release/audiocapture && echo "OK"
+    # Expected: OK
+    ```
+
+    <Accordion title="If swift build fails">
+      Your Swift toolchain may be too old (5.9+ required). Check with `swift --version`. Update Xcode Command Line Tools:
+      ```bash
+      sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install
+      ```
+    </Accordion>
+  </Step>
+
+  <Step title="Run the app">
+    ```bash
+    npm run dev
+    ```
+
+    The Electron app opens. On first launch you'll be prompted to enter your API keys in the settings.
+
+    <Warning>
+      If audio capture doesn't work: macOS requires explicit permissions. Go to **System Settings → Privacy & Security** and grant both **Microphone** and **Screen Recording** access to the app (or to your terminal emulator during development).
+    </Warning>
+  </Step>
+</Steps>
+
+## Required Permissions
+
+macOS requires explicit user consent for audio capture. On first recording, the app will request these:
+
+| Permission | Why it's needed | How to grant |
+|------------|----------------|--------------|
+| **Microphone** | Capture your voice | System Settings → Privacy & Security → Microphone |
+| **Screen Recording** | Capture system audio via ScreenCaptureKit | System Settings → Privacy & Security → Screen Recording |
+| **Accessibility** (Pro only) | Recall SDK meeting window detection | System Settings → Privacy & Security → Accessibility |
+
+<Note>
+During development, you may need to grant these permissions to your **terminal emulator** (e.g., iTerm, Terminal.app) rather than the Electron app directly. In production builds, the signed `.app` is the target.
+</Note>
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| `build-deps.sh`: "gstreamer-1.0 not found" | Revisit Step 3 - check `pkg-config --modversion gstreamer-1.0` |
+| `cmake-js compile` fails with "cmake not found" | Run `npx cmake-js --version` - if it fails, delete `node_modules` inside `src/native/aec/` and re-run `npm install` |
+| `swift build` fails with unresolved imports | Swift toolchain too old (5.9+ required) |
+| `npm install` fails with `node-gyp` errors | `xcode-select --install` - ensure CLI tools are installed |
+| No audio captured despite permissions granted | Restart the app - macOS sometimes requires a restart after granting Screen Recording |
+| `No transcript in message` for 30+ seconds | Check Deepgram API key validity and network connectivity |

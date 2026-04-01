@@ -1,122 +1,71 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
-  "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+  "name": "Raven",
+  "logo": {
+    "light": "/logo/raven_full.svg",
+    "dark": "/logo/raven-white.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/logo/raven_black_small.png",
+  "colors": {
+    "primary": "#6366f1",
+    "light": "#818CF8",
+    "dark": "#4F46E5"
+  },
+  "theme": "mint",
   "navigation": {
-    "tabs": [
+    "groups": [
       {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
+        "group": "Getting Started",
+        "pages": [
+          "introduction",
+          "quickstart/overview",
+          "quickstart/macos",
+          "quickstart/windows"
         ]
       },
       {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
+        "group": "Using Raven",
+        "pages": [
+          "features/recording",
+          "features/ai",
+          "features/overlay",
+          "features/modes",
+          "features/sessions"
+        ]
+      },
+      {
+        "group": "Pro Features",
+        "pages": [
+          "pro/free-vs-pro",
+          "pro/billing",
+          "pro/authentication"
+        ]
+      },
+      {
+        "group": "Open Source",
+        "pages": [
+          "contributing/repo-structure",
+          "contributing/architecture",
+          "contributing/testing-guide"
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
+    ]
+  },
+  "anchors": [
+    {
+      "anchor": "GitHub",
+      "icon": "github",
+      "href": "https://github.com/Laxcorp-Research/project-raven"
+    },
+    {
+      "anchor": "Website",
+      "icon": "globe",
+      "href": "https://useraven.ai"
     }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
+  ],
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/Laxcorp-Research/project-raven"
     }
   }
 }

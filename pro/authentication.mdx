@@ -1,0 +1,71 @@
+---
+title: Accounts & Login
+description: Sign in to Raven Pro with Google or email, and manage your account.
+---
+
+<Note>
+This page is about **Raven Pro** accounts. The [open-source version](/quickstart/overview) doesn't require sign-in - you provide your own API keys and everything runs locally.
+</Note>
+
+## Signing In
+
+Raven Pro supports two sign-in methods:
+
+<Tabs>
+  <Tab title="Google">
+    1. Click **"Get Started"** on the welcome screen
+    2. Your browser opens to Google's sign-in page
+    3. Sign in with your Google account
+    4. A page confirms **"Opening Raven"** and redirects back to the app
+    5. You're signed in - the app continues to the next onboarding step
+  </Tab>
+  <Tab title="Email & Password">
+    1. Click **"Get Started"** on the welcome screen
+    2. Your browser opens to Raven's sign-in page
+    3. Enter your email and password (or create an account)
+    4. A page confirms **"Opening Raven"** and redirects back to the app
+    5. You're signed in
+  </Tab>
+</Tabs>
+
+Authentication happens in your browser for security - your password is never entered inside the app itself.
+
+## What Happens After Sign-In
+
+Once signed in, Raven:
+
+- Sets up managed API keys (no key configuration needed)
+- Syncs your sessions, modes, and documents from the cloud
+- Activates Pro features like meeting detection and Fast/Deep toggle
+- Remembers your session across app restarts
+
+## Session Expiry
+
+Your sign-in session stays active for a long time and refreshes automatically in the background. If it ever expires (e.g., after a very long period of inactivity), you'll see a **"Session expired"** message and need to sign in again. No data is lost.
+
+## Account Settings
+
+From **Settings > Profile**, you can:
+
+- **Change your display name** - shown in the overlay and dashboard header
+- **Upload a profile picture** - includes a crop editor, or uses your Google avatar by default
+- **Change your password** - if you signed up with email
+- **Delete your account** - permanently removes your account and all cloud data
+
+## Signing Out
+
+Click your avatar in the dashboard header and select **"Sign out"**. This:
+
+- Signs you out of the current device
+- Hides the overlay
+- Returns you to the sign-in screen
+
+Your local session data remains on the device. Sign back in to resume cloud sync.
+
+## Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| Browser didn't redirect back to Raven | Click **"Try again"** on the waiting screen - it starts a fresh sign-in |
+| "Session expired" message | Sign in again - this is normal after extended inactivity |
+| Signed in but features aren't working | Check your internet connection - Pro features need a connection to verify your account |
