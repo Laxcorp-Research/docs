@@ -23,7 +23,7 @@ description: Complete macOS setup guide from a fresh machine to a running app.
   </Step>
 
   <Step title="Install Node.js 22">
-    Install via [nvm](https://github.com/nvm-sh/nvm) (recommended):
+    Install via [nvm](https://github.com/nvm-sh/nvm) (recommended). Skip the `curl` line if you already have nvm.
 
     ```bash
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
@@ -78,7 +78,7 @@ description: Complete macOS setup guide from a fresh machine to a running app.
     npm install
     ```
 
-    `npm install` takes a few minutes. It automatically rebuilds `better-sqlite3` for Electron via the `postinstall` script.
+    `npm install` takes a few minutes. It automatically rebuilds `better-sqlite3` for Electron via the `postinstall` script - you'll see `@electron/rebuild` output near the end.
 
     Verify:
     ```bash
@@ -86,7 +86,7 @@ description: Complete macOS setup guide from a fresh machine to a running app.
     # Expected: OK
     ```
 
-    <Warning>If `npm install` fails with `node-gyp` errors, make sure Xcode Command Line Tools installed successfully in Step 1.</Warning>
+    <Warning>If `npm install` fails with `node-gyp` errors, make sure Xcode Command Line Tools installed successfully in Step 1. Run `xcode-select -p` to confirm.</Warning>
   </Step>
 
   <Step title="Build the GStreamer echo-cancellation addon">
@@ -100,7 +100,7 @@ description: Complete macOS setup guide from a fresh machine to a running app.
 
     What this does:
     1. Installs the addon's build tools (`cmake-js`, `node-addon-api`)
-    2. Verifies all GStreamer libraries and builds the WebRTC DSP plugin from source
+    2. Verifies all GStreamer libraries and builds the WebRTC DSP plugin from source (Homebrew doesn't ship it)
     3. Compiles the C++ echo-cancellation native module
 
     Verify:
@@ -108,6 +108,11 @@ description: Complete macOS setup guide from a fresh machine to a running app.
     ls src/native/aec/build/Release/raven-aec.node && echo "OK"
     # Expected: OK
     ```
+
+    <Accordion title="Troubleshooting">
+      - **`build-deps.sh` fails with "gstreamer-1.0 not found"**: Revisit Step 3 and make sure `pkg-config --modversion gstreamer-1.0` works.
+      - **`cmake-js compile` fails with "cmake not found"**: cmake is bundled with cmake-js. Run `npx cmake-js --version` - if that fails, delete `node_modules` inside `src/native/aec/` and re-run `npm install`.
+    </Accordion>
   </Step>
 
   <Step title="Build the Swift audio capture binary">
@@ -136,10 +141,10 @@ description: Complete macOS setup guide from a fresh machine to a running app.
     npm run dev
     ```
 
-    The Electron app opens. On first launch you'll be prompted to enter your API keys in the settings.
+    The Electron app opens. On first launch you'll be prompted to enter your API keys (Deepgram for transcription, Claude or OpenAI for AI assistance).
 
     <Warning>
-      If audio capture doesn't work: macOS requires explicit permissions. Go to **System Settings → Privacy & Security** and grant both **Microphone** and **Screen Recording** access to the app (or to your terminal emulator during development).
+      If audio capture doesn't work: macOS requires explicit permissions. Go to **System Settings > Privacy & Security** and grant both **Microphone** and **Screen Recording** access to the app (or to your terminal emulator during development).
     </Warning>
   </Step>
 </Steps>
@@ -150,9 +155,8 @@ macOS requires explicit user consent for audio capture. On first recording, the 
 
 | Permission | Why it's needed | How to grant |
 |------------|----------------|--------------|
-| **Microphone** | Capture your voice | System Settings → Privacy & Security → Microphone |
-| **Screen Recording** | Capture system audio via ScreenCaptureKit | System Settings → Privacy & Security → Screen Recording |
-| **Accessibility** (Pro only) | Recall SDK meeting window detection | System Settings → Privacy & Security → Accessibility |
+| **Microphone** | Capture your voice | System Settings > Privacy & Security > Microphone |
+| **Screen Recording** | Capture system audio | System Settings > Privacy & Security > Screen Recording |
 
 <Note>
 During development, you may need to grant these permissions to your **terminal emulator** (e.g., iTerm, Terminal.app) rather than the Electron app directly. In production builds, the signed `.app` is the target.
@@ -166,5 +170,6 @@ During development, you may need to grant these permissions to your **terminal e
 | `cmake-js compile` fails with "cmake not found" | Run `npx cmake-js --version` - if it fails, delete `node_modules` inside `src/native/aec/` and re-run `npm install` |
 | `swift build` fails with unresolved imports | Swift toolchain too old (5.9+ required) |
 | `npm install` fails with `node-gyp` errors | `xcode-select --install` - ensure CLI tools are installed |
+| `NODE_MODULE_VERSION mismatch` at runtime | `npx @electron/rebuild -f -w better-sqlite3` from the project root |
 | No audio captured despite permissions granted | Restart the app - macOS sometimes requires a restart after granting Screen Recording |
-| `No transcript in message` for 30+ seconds | Check Deepgram API key validity and network connectivity |
+| App starts, no audio | System Settings > Privacy & Security: grant Microphone and Screen Recording |
